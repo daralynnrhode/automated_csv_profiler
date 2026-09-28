@@ -1,0 +1,17 @@
+column,pandas_dtype,inferred_type,role,non_missing,missing,missing_pct,unique,unique_ratio,notes,min,q1,median,mean,q3,max,std,iqr,outlier_count,outlier_pct
+VIN (1-10),str,string,Categorical attribute,271113,0,0.0,16671,0.0615,high-cardinality categorical (16671 categories); only top values reported,,,,,,,,,,
+County,str,string,Categorical attribute,271103,10,0.0,246,0.0009,,,,,,,,,,,
+City,str,string,Categorical attribute,271103,10,0.0,870,0.0032,,,,,,,,,,,
+State,str,string,Categorical attribute,271113,0,0.0,51,0.0002,,,,,,,,,,,
+Postal Code,float64,integer,Identifier-like field,271103,10,0.0,1098,0.0041,numeric-looking code (name suggests ZIP/FIPS/census/district/phone/code); arithmetic statistics not meaningful,,,,,,,,,,
+Model Year,int64,integer,Numeric measure,271113,0,0.0,22,0.0001,,1999.0,2021.0,2023.0,2021.9951,2024.0,2026.0,3.0567,3.0,18702.0,6.9
+Make,str,string,Categorical attribute,271113,0,0.0,47,0.0002,,,,,,,,,,,
+Model,str,string,Categorical attribute,271113,0,0.0,184,0.0007,,,,,,,,,,,
+Electric Vehicle Type,str,string,Categorical attribute,271113,0,0.0,2,0.0,,,,,,,,,,,
+Clean Alternative Fuel Vehicle (CAFV) Eligibility,str,string,Categorical attribute,271113,0,0.0,3,0.0,,,,,,,,,,,
+Electric Range,float64,integer,Numeric measure,271106,7,0.0,113,0.0004,,0.0,0.0,0.0,39.8856,33.0,337.0,78.7644,33.0,42492.0,15.67
+Legislative District,float64,integer,Categorical attribute,270454,659,0.24,49,0.0002,numeric-looking code (name suggests ZIP/FIPS/census/district/phone/code); arithmetic statistics not meaningful,,,,,,,,,,
+DOL Vehicle ID,int64,integer,Identifier-like field,271113,0,0.0,271113,1.0,unique integer sequence or ID-like name; excluded from statistics that assume a measurement,,,,,,,,,,
+Vehicle Location,str,string,Categorical attribute,271025,88,0.03,1095,0.004,,,,,,,,,,,
+Electric Utility,str,string,Categorical attribute,271103,10,0.0,77,0.0003,,,,,,,,,,,
+2020 Census Tract,float64,integer,Identifier-like field,271103,10,0.0,2349,0.0087,numeric-looking code (name suggests ZIP/FIPS/census/district/phone/code); arithmetic statistics not meaningful,,,,,,,,,,

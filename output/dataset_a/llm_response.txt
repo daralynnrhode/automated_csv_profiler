@@ -1,0 +1,6 @@
+1. [Data quality] The dataset contains 271113 rows, but 804 cells are missing, which is 0.02% of the total rows.
+2. [Distribution] The `Model Year` column has a mean of 2021.9951 and a standard deviation of 3.0567, indicating a relatively narrow range of values.
+3. [Categorical] The `Electric Vehicle Type` column has only 2 unique categories, with `Battery Electric Vehicle (BEV)` being the most common, accounting for 79.79% of the values.
+4. [Relationship] The correlation between `Model Year` and `Electric Range` is moderate, with a Pearson correlation coefficient of -0.544.
+5. [Limitation] The `Clean Alternative Fuel Vehicle (CAFV) Eligibility` column has a high percentage of unknown eligibility (63.01%), which may indicate a need for further investigation.
+6. [Question] What is the relationship between the `Postal Code` column and the `Electric Utility` column, given that the `Postal Code` column is identified as potentially sensitive?
