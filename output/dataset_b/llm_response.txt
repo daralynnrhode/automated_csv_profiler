@@ -1,0 +1,8 @@
+1. [Data quality] The dataset has 14373 rows, but 14372 of the `SQMSerial` values are missing, indicating a high percentage of missing data in this column.
+2. [Distribution] The `Latitude` values have a mean of 30.4498 and a standard deviation of 22.0046, indicating a relatively normal distribution.
+3. [Categorical] The `ObsType` column has only one unique category, `GAN`, which accounts for all 14373 rows, indicating a lack of diversity in this categorical attribute.
+4. [Relationship] The strongest positive correlation is between `Latitude` and `Elevation(m)` with a Pearson correlation coefficient of 0.137, indicating a weak linear association.
+5. [Limitation] The correlation measures linear association only and does not imply causation, so any observed relationships should be interpreted with caution.
+6. [Question] What is the relationship between the `SQMReading` values and the `LimitingMag` values, given that the correlation between these variables is very weak (0.029)?
+7. [Distribution] The `SQMReading` values have a mean of 37651172.3551 and a standard deviation of 1887631642.1826, indicating a highly skewed distribution.
+8. [Data quality] The `Country` column has 148 unique values, but the top categories only account for a small percentage of the total, indicating a lack of representation for some countries.

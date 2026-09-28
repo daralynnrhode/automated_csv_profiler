@@ -1,0 +1,18 @@
+column,pandas_dtype,inferred_type,role,non_missing,missing,missing_pct,unique,unique_ratio,notes,min,q1,median,mean,q3,max,std,iqr,outlier_count,outlier_pct
+ID,int64,integer,Identifier-like field,14373,0,0.0,14373,1.0,unique integer sequence or ID-like name; excluded from statistics that assume a measurement,,,,,,,,,,
+ObsType,str,string,Categorical attribute,14373,0,0.0,1,0.0001,,,,,,,,,,,
+Latitude,float64,float,Numeric measure,14373,0,0.0,9356,0.6509,,-90.0,29.9786,39.2118,30.4498,45.0789,89.9991,22.0046,15.1004,2287.0,15.91
+Longitude,float64,float,Numeric measure,14373,0,0.0,9356,0.6509,,-178.9018,-86.7973,-66.045,-33.9207,14.1116,176.8704,66.8722,100.9088,48.0,0.33
+Elevation(m),float64,float,Numeric measure,14373,0,0.0,7466,0.5194,,-5612.05,28.59,166.81,242.0788,288.53,4355.27,469.6748,259.94,1139.0,7.92
+LocalDate,str,datetime (text),Date-like field,14373,0,0.0,367,0.0255,,,,,,,,,,,
+LocalTime,str,datetime (text),Date-like field,14373,0,0.0,1071,0.0745,,,,,,,,,,,
+UTDate,str,datetime (text),Date-like field,14373,0,0.0,366,0.0255,,,,,,,,,,,
+UTTime,str,datetime (text),Date-like field,14373,0,0.0,1366,0.095,,,,,,,,,,,
+LimitingMag,int64,integer,Numeric measure,14373,0,0.0,8,0.0006,only 8 distinct integer values; may be a coded category,0.0,0.0,2.0,2.2688,4.0,7.0,1.999,4.0,0.0,0.0
+SQMReading,float64,float,Numeric measure,2514,11859,82.51,846,0.3365,,0.01,16.0,18.83,37651172.3551,20.64,94645484946.0,1887631642.1826,4.64,482.0,19.17
+SQMSerial,float64,integer,Numeric measure,1,14372,99.99,1,1.0,only 1 distinct integer values; may be a coded category,0.0,0.0,0.0,0.0,0.0,0.0,,0.0,0.0,0.0
+CloudCover,str,string,Categorical attribute,14373,0,0.0,4,0.0003,,,,,,,,,,,
+Constellation,str,string,Categorical attribute,14373,0,0.0,13,0.0009,,,,,,,,,,,
+SkyComment,str,string,Free-text field,8856,5517,38.38,6231,0.7036,,,,,,,,,,,
+LocationComment,str,string,Free-text field,9846,4527,31.5,6310,0.6409,,,,,,,,,,,
+Country,str,string,Categorical attribute,14373,0,0.0,148,0.0103,,,,,,,,,,,
