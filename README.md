@@ -108,7 +108,7 @@ The tests check that the mean, median, standard deviation, and IQR outlier count
 5. **Relationships:** Pearson correlation on numeric measures (identifiers excluded), strongest positive and negative pairs with a strength label.
 6. **Adaptive plots:** chosen from the roles present — missing-value bar chart, histograms, categorical bar charts, correlation heatmap, scatterplot of the strongest pair, boxplot of the column with most outliers, time series for date columns, numeric-by-category boxplots. Skipped plot types are listed with reasons.
 7. **Python-computed findings:** 5–8 template findings filled directly from the summary (always produced).
-8. **LLM narrative (optional):** a slimmed JSON summary plus strict rules goes to Ollama; the response is verified number by number.
+8. **LLM narrative (optional):** the rules go in Ollama's system prompt, and a compact JSON summary plus a closing task reminder go in the user prompt (context window 8192 tokens). If the reply is not a numbered list, it retries once. Each claim is then verified against the column(s) it names, and statistic words are checked against the matching Python statistic.
 9. **Report:** `report.md` is written entirely by the program.
 
 ## Known limitations
@@ -118,7 +118,8 @@ The tests check that the mean, median, standard deviation, and IQR outlier count
 - The 1.5×IQR rule assumes roughly symmetric data and over-flags skewed columns.
 - Pearson correlation captures only linear association and is sensitive to outliers; it never shows causation.
 - Sensitive-data detection is a heuristic; no warning does not mean the data is safe.
-- The number verifier matches values at the precision written; a number can "match" by coincidence if it appears elsewhere in the summary, and it cannot judge wording or reasoning. A person must still review the narrative.
+- The number verifier checks each number against the columns a claim names and checks statistic words (mean, std, correlation, …) against that exact statistic, but it cannot judge wording or reasoning. Examples it passed: "0.02% of rows" (the value is really a share of cells) and a correct r = −0.544 that is actually caused by placeholder zeros. A person must still review every claim.
+- Placeholder codes are treated as real values unless passed with `--na-values`, which applies to every column at once. Example: `Electric Range` = 0 means "not researched" in Dataset A, and (0, 0) coordinates mean "no location" in Dataset B.
 - Small local models may ignore instructions (e.g., produce fewer insights); the verification table makes this visible.
 - Only single-table CSV files that fit in memory are supported.
 
@@ -126,13 +127,13 @@ The tests check that the mean, median, standard deviation, and IQR outlier count
 
 | | Dataset A (development) | Dataset B (new) |
 |---|---|---|
-| Agency / organization | *TODO* | *TODO* |
-| Dataset title | *TODO* | *TODO* |
-| Source link | *TODO* | *TODO* |
-| Date accessed | *TODO* | *TODO* |
+| Agency / organization | Washington State Department of Licensing | Globe at Night (NSF NOIRLab) |
+| Dataset title | Electric Vehicle Population Data | Globe at Night 2024 Observations |
+| Source link | https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2 | https://globeatnight.org/maps-data/ |
+| Date accessed | September 27, 2026 | September 27, 2026 |
 | Local file | `data/dataset_a.csv` | `data/dataset_b.csv` |
-| Rows × columns | *TODO (from report)* | *TODO (from report)* |
-| How they differ | *TODO* | *TODO* |
+| Rows × columns | 271,113 × 16 | 14,373 × 17 |
+| How they differ | Large, nearly complete, mostly categorical vehicle records | Smaller citizen-science sky measurements; heavy missingness, placeholder coordinates, extreme outliers |
 
 See `data/README.md` for details.
 
