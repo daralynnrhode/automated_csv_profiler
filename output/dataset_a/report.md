@@ -8,7 +8,7 @@
 |---|---|
 | File | `dataset_a.csv` |
 | Rows | 271,113 |
-| Columns | 16 |
+| Columns | 16 | 
 | Encoding used to read file | utf-8 |
 | Role counts | Categorical attribute: 11, Identifier-like field: 3, Numeric measure: 2 |
 

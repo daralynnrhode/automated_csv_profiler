@@ -1,7 +1,7 @@
 # GenAI Development Log
 
 Assignment #2 is Green Zone Level 4 (full GenAI use allowed). This log records the meaningful ways generative AI supported development. Runtime prompts and responses for each report are saved in `output/<dataset>/llm_prompt.txt` and `llm_response.txt`.
-
+ 
 | Date | Tool and model | Purpose | Prompt or summary | Output used | What I verified or changed |
 |---|---|---|---|---|---|
 | 2026-09-25 | Claude (claude.ai; configured model `claude-opus-5-5`) | Design and write the initial profiler | Shared the full assignment text and asked for help building the system, with every command and required documentation | Initial `src/profiler.py`, `tests/test_profiler.py`, README and log templates | Read through each function to understand the pipeline; ran the tests (5 passed); ran it on both datasets and checked results by hand in pandas (see Checks below) |

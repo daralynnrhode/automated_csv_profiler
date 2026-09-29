@@ -11,7 +11,7 @@
 | Columns | 17 |
 | Encoding used to read file | utf-8 |
 | Role counts | Identifier-like field: 1, Categorical attribute: 4, Numeric measure: 6, Date-like field: 4, Free-text field: 2 |
-
+ 
 ### Column profile
 
 | Column | Inferred type | Probable role | Non-missing | Missing % | Unique | Notes |
