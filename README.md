@@ -9,21 +9,23 @@ CSV file → Python analysis → verified summary (JSON) → LLM explanation →
 
 ## Purpose
 
-This system takes any reasonably well-formed, single-table CSV and automatically produces a data profile *before* any modeling: a dataset overview, inferred column types and roles, data-quality checks, descriptive statistics with 1.5×IQR outlier flags, correlations, 5–8 adaptive plots, and a Markdown report.
+This system takes any reasonably well-formed, single-table CSV and automatically produces a data profile *before* any modeling: a dataset overview, inferred column types and roles, data-quality checks, descriptive statistics with 1.5×IQR outlier flags, correlations, up to 8 adaptive plots, and a Markdown report.
 
-**Python computes every number.** An optional local LLM (Ollama) receives only the verified JSON summary and writes a narrative. Every number in the LLM's response is then automatically matched against the Python summary, and causal wording ("causes", "leads to", …) is flagged. The program never deletes rows, fills missing values, or removes outliers — it only flags them.
+**Python computes every number.** An optional local LLM (Ollama) receives only the verified JSON summary and writes a narrative. Every number in the LLM's response is then checked against the values Python computed for the column(s) that claim names, statistic words (mean, std, correlation, …) are checked against that exact statistic, and causal wording ("causes", "leads to", …) is flagged. The program never deletes rows, fills missing values, or removes outliers — it only flags them.
 
 ## Environment
 
-- Python: **3.11** (tested; 3.10+ should work)
+- Python:  3.13.2 (developed on macOS, Apple M1 Pro)
 - Libraries: `pandas`, `numpy`, `matplotlib` (see `requirements.txt`). `pytest` is only for the optional tests.
 - Standard library only for the LLM call (`urllib`), so no API client or API key is needed.
 - LLM: **Ollama**, model **`llama3.2`** (3B) by default, running locally on a MacBook with Apple M1 Pro. Any Ollama model can be selected with `--model`.
 
 ## Installation
 
+Get the code, either by cloning the repository or by unzipping the submitted `automated_csv_profiler.zip`:
+
 ```bash
-git clone <your-repo-url> automated_csv_profiler
+git clone https://github.com/daralynnrhode/automated_csv_profiler.git
 cd automated_csv_profiler
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
@@ -36,7 +38,7 @@ ollama pull llama3.2
 
 ## Running the program
 
-Run every command from the repository root.
+Run every command from the repository root, with the virtual environment active (`source .venv/bin/activate`). The two CSVs are in `data/`. If they are missing, download them from the links in **Data sources** below and save them as `data/dataset_a.csv` and `data/dataset_b.csv`.
 
 ```bash
 # Dataset A (development dataset)
@@ -53,7 +55,7 @@ output/dataset_a/
     report.md               # full generated report (open in VS Code / GitHub to see plots)
     column_profile.csv      # one row per column: type, role, missingness, uniques, numeric stats
     analysis_summary.json   # the verified structured summary (what the LLM receives, plus more)
-    plots/plot_01.png ...   # 5–8 adaptive visualizations
+    plots/plot_01.png ...   # up to 8 adaptive visualizations
     llm_prompt.txt          # exact prompt sent to the model
     llm_response.txt        # raw model response (or the reason it was skipped)
 ```
@@ -97,12 +99,12 @@ Other thresholds (type-inference parse rates, high-cardinality ratio, top-k cate
 python -m pytest -q
 ```
 
-The tests check that the mean, median, standard deviation, and IQR outlier count match an independent NumPy calculation, that the program still runs with no numeric columns, no categorical columns, and no LLM, and that the verifier flags invented numbers and causal language.
+The tests check that the mean, median, standard deviation, and IQR outlier count match an independent NumPy calculation, that the program still runs with no numeric columns, no categorical columns, and no LLM, and that the verifier flags invented numbers, statistics mislabeled for the wrong column (e.g. a "mean" for a categorical column), and causal language.
 
 ## How it works
 
 1. **Load** with pandas (UTF-8, falling back to Latin-1). Values are never modified.
-2. **Infer type and role** for each column: Boolean (two boolean-like tokens), numeric (native or ≥95% of text values parse as numbers), date-like (≥90% parse as dates), identifier-like (unique integer sequence, ID-like name, or ≥90% unique strings), free text (mostly unique and long), categorical, or unknown/mixed. Numeric-looking codes whose names suggest ZIP/FIPS/phone are treated as labels.
+2. **Infer type and role** for each column: Boolean (two boolean-like tokens), numeric (native or ≥95% of text values parse as numbers), date-like (≥90% parse as dates), identifier-like (unique integer sequence, ID-like name, or ≥90% unique strings), free text (mostly unique and long), categorical, or unknown/mixed. Numeric-looking codes whose names suggest ZIP, FIPS, census tract, district, precinct, ward, phone, or "code" are treated as labels, not measurements.
 3. **Quality checks:** duplicate rows, constant and empty columns, high missingness, mixed types, identifier-like/high-cardinality columns, and potentially sensitive columns (name and value-pattern heuristics).
 4. **Statistics:** numeric (count, missing, min, Q1, median, mean, Q3, max, sample std, IQR, mode when values repeat, 1.5×IQR outliers, skewness); categorical (unique count, mode(s), top 10 counts and %).
 5. **Relationships:** Pearson correlation on numeric measures (identifiers excluded), strongest positive and negative pairs with a strength label.
@@ -143,6 +145,7 @@ See `data/README.md` for details.
 automated_csv_profiler/
     README.md
     requirements.txt
+    .gitignore
     src/profiler.py
     tests/test_profiler.py
     data/README.md
